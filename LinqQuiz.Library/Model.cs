@@ -17,6 +17,10 @@ namespace LinqQuiz.Library
 
     public class FamilySummary
     {
+
+        public FamilySummary(int iD, int count, decimal averageAge) => (FamilyID, NumberOfFamilyMembers, AverageAge) = (iD, count, averageAge);
+        public FamilySummary() { }
+
         public int FamilyID { get; set; }
         public int NumberOfFamilyMembers { get; set; }
         public decimal AverageAge { get; set; }

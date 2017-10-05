@@ -1,2 +1,9 @@
 .vs
 .vscode
+/LinqQuiz.Library/bin/Debug/netcoreapp2.0
+/LinqQuiz.Library/obj/Debug/netcoreapp2.0
+/LinqQuiz.Library/obj/Release/netcoreapp2.0
+/LinqQuiz.Library/obj
+/LinqQuiz.Tests/bin/Debug/netcoreapp2.0
+/LinqQuiz.Tests/obj/Debug/netcoreapp2.0
+/LinqQuiz.Tests/obj

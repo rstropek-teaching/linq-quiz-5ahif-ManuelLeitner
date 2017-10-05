@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Linq.Enumerable;
 
 namespace LinqQuiz.Library {
     public static class Quiz {
@@ -12,7 +13,7 @@ namespace LinqQuiz.Library {
         ///     Thrown if <paramref name="exclusiveUpperLimit"/> is lower than 1.
         /// </exception>
         public static int[] GetEvenNumbers(int exclusiveUpperLimit) {
-            return Enumerable.Range(1, exclusiveUpperLimit - 1).Where(v => v % 2 == 0).ToArray();
+            return Range(1, exclusiveUpperLimit - 1).Where(v => v % 2 == 0).ToArray();
         }
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace LinqQuiz.Library {
         /// Enumerable.Range is sorted ascending automatically, reversing it makes the data sorted descending.
         /// </remarks>
         public static int[] GetSquares(int exclusiveUpperLimit) {
-            return (from number in Enumerable.Range(1, exclusiveUpperLimit < 0 ? 0 : exclusiveUpperLimit - 1) where number % 7 == 0 select checked(number * number)).Reverse().ToArray();
+            return Range(1, exclusiveUpperLimit<0?0: (exclusiveUpperLimit-1) / 7).Select(v => checked(v * v * 49)).Reverse().ToArray();
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace LinqQuiz.Library {
         /// in <paramref name="families"/> is empty.
         /// </remarks>
         public static FamilySummary[] GetFamilyStatistic(IReadOnlyCollection<IFamily> families) {
-            return (from fam in families select new FamilySummary() { FamilyID = fam.ID, NumberOfFamilyMembers = fam.Persons.Count, AverageAge = fam.Persons.Count == 0 ? 0 : fam.Persons.Average(pers => pers.Age) }).ToArray();
+            return families.Select(fam => new FamilySummary( fam.ID, fam.Persons.Count, fam.Persons.DefaultIfEmpty().Average(pers => pers?.Age??0))).ToArray();
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace LinqQuiz.Library {
         /// with number of occurrences equal to zero.
         /// </remarks>
         public static (char letter, int numberOfOccurrences)[] GetLetterStatistic(string text) {
-            return (from character in text.ToUpper().ToCharArray() where char.IsLetter(character) group character by character into ch select (ch.Key, ch.Count())).ToArray();
+            return text.ToArray().Where(c=>char.IsLetter(c)).GroupBy(c => c).Select(g => (g.Key, g.Count())).ToArray();
         }
     }
 }
